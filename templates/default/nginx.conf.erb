@@ -1,0 +1,26 @@
+user <%= node['nginx']['user'] %> <%= node['nginx']['user'] %>;
+worker_processes <%= node['nginx']['worker_processes'] %>
+
+error_log <%= node['nginx']['log_dir'] %>/error.log;
+pid <%= node['nginx']['pid'] %>;
+
+events {
+  worker_connections <%= node['nginx']['worker_connections'] %>;
+}
+
+http {
+  include <%= node['nginx']['dir'] %>/mime.types;
+  include <%= node['nginx']['dir'] %>/proxy.conf;
+  include <%= node['nginx']['dir'] %>/fastcgi.conf;
+  default_type application/octet-stream;
+  log_format main '$remote_addr - $remote_user [$time_local] $status '
+    '"$request" $body_bytes_sent "$http_referer" '
+    '"$http_user_agent" "$http_x_forwarded_for"';
+  access_log <%= node['nginx']['log_dir'] %>/access.log;
+  sendfile on;
+  tcp_nopush on;
+  server_names_hash_bucket_size 128;
+
+  include <%= node['nginx']['dir'] %>/conf.d/*.conf;
+  include <%= node['nginx']['dir'] %>/sites-enabled/*;
+}

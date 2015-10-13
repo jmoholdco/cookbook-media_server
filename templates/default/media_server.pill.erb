@@ -1,0 +1,18 @@
+Bluepill.application('media_server') do |app|
+  app.process('nzbget') do |process|
+    process.pid_file = '/var/run/nzbget.pid'
+    process.start_command = '/usr/local/bin/nzbget -D'
+    process.stop_command = '/usr/local/bin/nzbget -Q'
+    process.checks :cpu_usage, every: 10.seconds, below: 10, times: 3
+    process.uid = 'nzbget'
+    process.gid = 'nogroup'
+  end
+
+  app.process('sonarr') do |process|
+    process.pid_file = '/var/run/sonarr.pid'
+    process.start_command = 'mono --debug /opt/NzbDrone/NzbDrone.exe'
+    process.checks :cpu_usage, every: 10.seconds, below: 10, times: 3
+    process.uid = 'sonarr'
+    process.gid = 'nogroup'
+  end
+end

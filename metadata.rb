@@ -1,0 +1,13 @@
+name 'media_server'
+maintainer 'The Authors'
+maintainer_email 'you@example.com'
+license 'all_rights'
+description 'Installs/Configures media_server'
+long_description 'Installs/Configures media_server'
+version '0.1.0'
+
+depends 'apt', '~> 2.8'
+depends 'sonarr', '~> 0.1'
+depends 'bluepill', '~> 2.4'
+depends 'nfs', '~> 2.2'
+depends 'ohai', '~> 2.0'
