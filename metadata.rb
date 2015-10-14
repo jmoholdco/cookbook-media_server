@@ -4,7 +4,7 @@ maintainer_email 'you@example.com'
 license 'all_rights'
 description 'Installs/Configures media_server'
 long_description 'Installs/Configures media_server'
-version '0.1.0'
+version '0.1.2'
 
 depends 'apt', '~> 2.8'
 depends 'sonarr', '~> 0.1'

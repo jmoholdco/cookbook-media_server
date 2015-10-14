@@ -20,7 +20,12 @@ RSpec.describe 'media_server::default' do
     it { is_expected.to be_enabled }
   end
 
-  describe service('media_server') do
+  describe service('sonarr') do
+    it { is_expected.to be_running }
+    it { is_expected.to be_enabled }
+  end
+
+  describe service('nzbget') do
     it { is_expected.to be_running }
     it { is_expected.to be_enabled }
   end

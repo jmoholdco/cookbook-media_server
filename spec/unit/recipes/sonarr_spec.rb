@@ -12,11 +12,15 @@ RSpec.shared_examples 'the media_server::sonarr recipe' do
     expect(chef_run).to include_recipe 'sonarr::default'
   end
 
+  it 'adds a group for the service' do
+    expect(chef_run).to create_group('sonarr')
+  end
+
   it 'adds a user for the service' do
     expect(chef_run).to create_user('sonarr').with(
       system: true,
-      home: '/var/media_server/sonarr',
-      gid: 'nogroup'
+      home: '/usr/local/etc/sonarr',
+      gid: 'sonarr'
     )
   end
 end

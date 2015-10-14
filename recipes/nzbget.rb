@@ -4,23 +4,24 @@
 #
 # Copyright (c) 2015 The Authors, All Rights Reserved.
 
-source_dir = node['media_server']['source_dir']
-conf_opts = node['media_server']['nzbget']['configuration']
-dependencies = node['media_server']['nzbget']['dependencies']
-service_user_dir = node['media_server']['services']['home']
-
-dependencies.each do |dep|
+node['media_server']['nzbget']['dependencies'].each do |dep|
   package dep
 end
 
+directory '/usr/local/etc/nzbget' do
+  recursive true
+end
+
+group 'nzbget'
+
 user 'nzbget' do
   action :create
-  home "#{service_user_dir}/nzbget"
-  gid 'nogroup'
+  home '/usr/local/etc/nzbget'
+  gid 'nzbget'
   system true
 end
 
-git "#{source_dir}/nzbget" do
+git "#{node['media_server']['source_dir']}/nzbget" do
   repository 'https://github.com/nzbget/nzbget'
   revision node['media_server']['nzbget']['tag']
   action :sync
@@ -28,11 +29,29 @@ git "#{source_dir}/nzbget" do
 end
 
 bash 'install_nzbget_git' do
-  cwd "#{source_dir}/nzbget"
+  cwd "#{node['media_server']['source_dir']}/nzbget"
   code <<-EOH
   touch aclocal.m4 configure Makefile.in config.h.in
-  (./configure #{conf_opts} && make && make install)
+  (./configure #{node['media_server']['nzbget']['configuration']} &&
+  make && make install && make install-conf)
   EOH
   action :nothing
-  creates '/usr/local/nzbget'
+  creates '/usr/local/bin/nzbget'
+end
+
+if node['media_server']['init_style'] == 'systemd'
+  template '/lib/systemd/system/nzbget.service' do
+    source 'nzbget_init.service.erb'
+    mode 0644
+    owner 'root'
+    group 'root'
+  end
+
+else
+  template '/etc/init.d/nzbget' do
+    source 'nzbget_init.lsb.erb'
+    mode 0755
+    owner 'root'
+    group 'root'
+  end
 end

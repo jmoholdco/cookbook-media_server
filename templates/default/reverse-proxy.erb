@@ -11,8 +11,7 @@ server {
   location ~ ^/nzbget$ {
     return 302 $scheme://$host$request_uri/;
   }
-  location ~ ^/tv($|./*) {
-    rewrite /tv/(.*) /$1 break;
+  location /tv {
     proxy_pass http://127.0.0.1:8989;
     proxy_set_header Host $host;
     proxy_set_header Host $host;

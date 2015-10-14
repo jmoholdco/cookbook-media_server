@@ -29,6 +29,14 @@ service 'nginx' do
   action :enable
 end
 
+group 'nginx'
+
+user 'nginx' do
+  action :create
+  gid 'nginx'
+  system true
+end
+
 # Set up directory structure
 #
 directory node['nginx']['dir'] do
@@ -84,6 +92,15 @@ end
 
 template "#{node['nginx']['dir']}/sites-available/default" do
   source 'reverse-proxy.erb'
+  owner 'root'
+  group node['root_group']
+  mode '0644'
+  notifies :reload, 'service[nginx]', :delayed
+end
+
+template 'proxy.conf' do
+  path "#{node['nginx']['dir']}/proxy.conf"
+  source 'proxy.conf.erb'
   owner 'root'
   group node['root_group']
   mode '0644'

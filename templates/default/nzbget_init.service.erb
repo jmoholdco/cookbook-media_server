@@ -1,0 +1,17 @@
+[Unit]
+Description=NZBGet Daemon
+After=syslog.target network.target
+
+[Service]
+User=root
+Group=root
+
+Type=simple
+ExecStart=/usr/local/bin/nzbget -D
+ExecStop=/usr/local/bin/nzbget -Q
+TimeoutStopSec=20
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

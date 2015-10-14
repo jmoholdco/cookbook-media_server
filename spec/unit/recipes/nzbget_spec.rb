@@ -25,11 +25,15 @@ RSpec.shared_examples 'the media_server::nzbget recipe' do
     expect(git_src).to notify('bash[install_nzbget_git]').to(:run).immediately
   end
 
+  it 'adds a group for the service' do
+    expect(chef_run).to create_group('nzbget')
+  end
+
   it 'adds a user for the service' do
     expect(chef_run).to create_user('nzbget').with(
       system: true,
-      home: '/var/media_server/nzbget',
-      gid: 'nogroup'
+      home: '/usr/local/etc/nzbget',
+      gid: 'nzbget'
     )
   end
 end

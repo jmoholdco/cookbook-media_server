@@ -4,8 +4,11 @@
 #
 # Copyright (c) 2015 The Authors, All Rights Reserved.
 include_recipe 'apt' if platform_family? 'debian'
-include_recipe 'bluepill'
-include_recipe 'nfs::client4'
+if node['platform']['version'].to_f >= 15.0
+  include_recipe 'nfs::client'
+else
+  include_recipe 'nfs::client4'
+end
 
 directory node['media_server']['source_dir'] do
   recursive true
@@ -25,4 +28,3 @@ end
 include_recipe 'media_server::nginx'
 include_recipe 'media_server::nzbget'
 include_recipe 'media_server::sonarr'
-include_recipe 'media_server::bluepill'
