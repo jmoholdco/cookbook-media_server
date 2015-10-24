@@ -3,15 +3,75 @@
     <meta charset="utf-8">
     <meta http-equiv="refresh" content="40" />
     <title>We done fucked up!</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
     <style type="text/css" media="screen">
-      <%# TODO: add some css %>
+      body {
+        font-family: "Roboto";
+        font-weight: 100;
+        background-color: #eeeeee;
+      }
+      h1,h2,h3,h4,h5,h6 {
+        text-align: center;
+        font-weight: 100;
+      }
+      h1 {
+        font-size: 72px;
+      }
+      h2 {
+        font-size: 64px;
+      }
+      .container {
+        width: 100%;
+        text-align: center;
+      }
+      .error-info {
+        background-color: rgba(255, 25, 79, 0.75);
+        display: inline-block;
+        vertical-align: middle;
+        width: 40%;
+        max-width: 40%;
+        margin: 0 auto;
+        border-radius: 4px;
+        z-index: 2;
+        box-shadow: 7px 7px 5px #cccccc;
+      }
+      .error-message {
+        font-weight: 400;
+      }
+      .countdown {
+        font-weight: 400;
+      }
+      .seconds {
+        font-weight: 100;
+      }
+      #CDTimer {
+        font-size: 44px;
+      }
     </style>
   </head>
   <body>
     <h1>We done fucked up!</h1>
-    <h2>Error 502</h2>
-    <p>Most likely, the service that this reverse proxy is trying to reach is not running.</p>
-    <p>Count Down to Refresh: <span id="CDTimer"></span></p>
+    <div class="container">
+      <div class="error-info">
+        <h2>Error 502</h2>
+      </div>
+    </div>
+    <br />
+    <div class="container">
+      <div class="error-message">
+        <p>
+          Most likely, the service that this reverse proxy is trying to reach is not running.
+          Please try logging into the server and restarting the service.
+        </p>
+      </div>
+    </div>
+    <br />
+    <div class="container">
+      <div class="countdown">
+        <span>Refreshing in: <br />
+          <span id="CDTimer"></span> <span class="seconds">seconds.</span></span>
+      </div>
+    </div>
 
     <script type="text/javascript" charset="utf-8">
       /*<![CDATA[*/
