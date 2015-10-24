@@ -14,4 +14,6 @@ RSpec.configure do |config|
 
   config.order = :random
   Kernel.srand config.seed
+
+  config.fail_fast = true
 end

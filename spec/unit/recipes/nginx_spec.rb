@@ -90,6 +90,10 @@ RSpec.describe 'media_server::nginx' do
           )
         end
 
+        it 'creates the template for the 502 error page' do
+          expect(chef_run).to create_template('/var/www/html/502.html')
+        end
+
         describe 'notifications' do
           let(:conf) { chef_run.template('/etc/nginx/nginx.conf') }
           let(:site) { chef_run.template('/etc/nginx/sites-available/default') }

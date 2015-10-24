@@ -107,6 +107,13 @@ template 'proxy.conf' do
   notifies :reload, 'service[nginx]', :delayed
 end
 
+template '/var/www/html/502.html' do
+  source '502.html.erb'
+  owner 'root'
+  group node['root_group']
+  mode '0644'
+end
+
 execute 'nxensite default' do
   command "#{node['nginx']['script_dir']}/nxensite default"
   notifies :reload, 'service[nginx]', :delayed
