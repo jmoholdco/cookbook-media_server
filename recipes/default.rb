@@ -28,3 +28,4 @@ end
 include_recipe 'media_server::nginx'
 include_recipe 'media_server::nzbget'
 include_recipe 'media_server::sonarr'
+include_recipe 'couch_potato'

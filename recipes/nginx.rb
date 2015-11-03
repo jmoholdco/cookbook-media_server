@@ -11,7 +11,7 @@ include_recipe 'media_server::ohai'
 # Set up the repos
 apt_repository 'nginx' do
   uri "http://nginx.org/packages/#{node['platform']}"
-  distribution node['lsb']['codename']
+  distribution 'vivid'
   components %w(nginx)
   deb_src true
   key 'http://nginx.org/keys/nginx_signing.key'
