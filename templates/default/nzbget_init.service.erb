@@ -6,7 +6,8 @@ After=syslog.target network.target
 User=root
 Group=root
 
-Type=simple
+Type=forking
+PIDFile=/var/run/nzbget/nzbget.pid
 ExecStart=/usr/local/bin/nzbget -D
 ExecStop=/usr/local/bin/nzbget -Q
 TimeoutStopSec=20
