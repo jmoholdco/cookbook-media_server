@@ -7,7 +7,7 @@ User=root
 Group=root
 
 Type=forking
-PIDFile=/var/run/nzbget/nzbget.pid
+PIDFile=/usr/local/etc/nzbget/nzbget.lock
 ExecStart=/usr/local/bin/nzbget -D
 ExecStop=/usr/local/bin/nzbget -Q
 TimeoutStopSec=20
